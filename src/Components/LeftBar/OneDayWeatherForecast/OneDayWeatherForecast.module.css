@@ -1,0 +1,72 @@
+.oneDayWeatherForecast {
+
+}
+
+.oneDayWeatherForecast__weatherIcon {
+    text-align: center;
+}
+
+.oneDayWeatherForecast__weatherIcon img{
+    width: 120px;
+}
+
+.oneDayWeatherForecast__temp {
+
+}
+
+.oneDayWeatherForecast__temp p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.oneDayWeatherForecast__location {
+
+}
+
+.oneDayWeatherForecast__location p {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.oneDayWeatherForecast__currentDay {
+
+}
+
+.oneDayWeatherForecast__currentDay p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.oneDayWeatherForecast__currentDay p span {
+    color: #C1C8D6;
+    font-size: 18px;
+}
+
+.oneDayWeatherForecast__hr {
+    border: 1px solid #E8E8E8;
+    margin-bottom: 15px;
+}
+
+.oneDayWeatherForecast__clouds {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.oneDayWeatherForecast__clouds p {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+
+.oneDayWeatherForecast__clouds img {
+    width: 32px;
+    margin-right: 15px;
+}
