@@ -2,11 +2,11 @@ import React from "react";
 import styles from './LeftBar.module.css';
 import classNames from 'classnames';
 import OneDayWeatherForecastContainer from "./OneDayWeatherForecast/OneDayWeatherForecastConainer";
-import SearchInput from "./SearchInput/SearchInput";
+import SearchInputContainer from "./SearchInput/SearchInputContainer";
 
 const LeftBar = (props) => {
     return (<div className={classNames(styles.leftBar)}>
-        <SearchInput />
+        <SearchInputContainer />
         <OneDayWeatherForecastContainer />
     </div>);
 }

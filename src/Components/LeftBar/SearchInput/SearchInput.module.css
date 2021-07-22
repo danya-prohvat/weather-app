@@ -22,6 +22,11 @@
     padding-left: 45px;
     font-family: 'Open Sans', sans-serif;
     font-size: 18px;
+    transition: .1s;
+}
+
+.searchInput input:hover, .searchInput input:active, .searchInput input:focus {
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .searchInput input::placeholder {
@@ -54,4 +59,9 @@
     font-family: 'Open Sans', sans-serif;
     margin-bottom: 6px;
     margin-top: 6px;
+    cursor: pointer;
+}
+
+.searchInput__dropDownList li:hover {
+    transform: scale(1.01);
 }

@@ -7,79 +7,79 @@ const SEARCH_SIMILAR_CITIES = 'SEARCH-SIMILAR-CITIES';
 
 const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 const ukrCities = ['Белгород Днестровский',
-'Белосарайская коса',
-'Бердянск',
-'Борисполь',
-'Буковель',
-'Верховина',
-'Винница',
-'Воловец',
-'Ворохта',
-'Днепропетровск',
-'Долина',
-'Донецк',
-'Драгобрат',
-'Ждениево',
-'Житомир',
-'Закарпатье',
-'Запорожье',
-'Ивано Франковск',
-'Ивано',
-'Ильичевск',
-'Каменец Подольский',
-'Затока',
-'Киев',
-'Кирилловка',
-'Кировоград',
-'Коблево',
-'Ковель',
-'Косов',
-'Кременчуг',
-'Кривой Рог',
-'Кузнецовск',
-'Луганск',
-'Луцк',
-'Львов',
-'Мариуполь',
-'Мелекино',
-'Мелитополь',
-'Миргород',
-'Моршин',
-'Мукачево',
-'Николаев',
-'Одесса',
-'Пилипец',
-'Полтава',
-'Поляна',
-'Приморск',
-'Ровно',
-'Святогорск',
-'Седово',
-'Славское',
-'Славянск',
-'Соледар',
-'Солочин',
-'Сумы',
-'Сходница',
-'Тернополь',
-'Трускавец',
-'Ужгород',
-'Урзуф',
-'Харьков',
-'Херсон',
-'Хмельник',
-'Хмельницкий',
-'Черкассы',
-'Чернигов',
-'Черновцы',
-'Щурово',
-'Яремча',
-'Ясиня',];
+    'Белосарайская коса',
+    'Бердянск',
+    'Борисполь',
+    'Буковель',
+    'Верховина',
+    'Винница',
+    'Воловец',
+    'Ворохта',
+    'Днепропетровск',
+    'Долина',
+    'Донецк',
+    'Драгобрат',
+    'Ждениево',
+    'Житомир',
+    'Закарпатье',
+    'Запорожье',
+    'Ивано Франковск',
+    'Ивано',
+    'Ильичевск',
+    'Каменец Подольский',
+    'Затока',
+    'Киев',
+    'Кирилловка',
+    'Кировоград',
+    'Коблево',
+    'Ковель',
+    'Косов',
+    'Кременчуг',
+    'Кривой Рог',
+    'Кузнецовск',
+    'Луганск',
+    'Луцк',
+    'Львов',
+    'Мариуполь',
+    'Мелекино',
+    'Мелитополь',
+    'Миргород',
+    'Моршин',
+    'Мукачево',
+    'Николаев',
+    'Одесса',
+    'Пилипец',
+    'Полтава',
+    'Поляна',
+    'Приморск',
+    'Ровно',
+    'Святогорск',
+    'Седово',
+    'Славское',
+    'Славянск',
+    'Соледар',
+    'Солочин',
+    'Сумы',
+    'Сходница',
+    'Тернополь',
+    'Трускавец',
+    'Ужгород',
+    'Урзуф',
+    'Харьков',
+    'Херсон',
+    'Хмельник',
+    'Хмельницкий',
+    'Черкассы',
+    'Чернигов',
+    'Черновцы',
+    'Щурово',
+    'Яремча',
+    'Ясиня',];
 
 let initialState = {
     temperatureUnit: 'C',
     currentLocation: 'Винница',
-    searchData:{
+    searchData: {
         currentSearchValue: '',
         similarCityList: [],
     },
@@ -123,6 +123,10 @@ const weatherReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentLocation: action.city,
+                searchData: {
+                    ...state.searchData,
+                    currentSearchValue: '',
+                }
             };
         }
         case CHANGE_CURRENT_SEARCH_VALUE: {
@@ -130,7 +134,7 @@ const weatherReducer = (state = initialState, action) => {
                 ...state,
                 searchData: {
                     ...state.searchData,
-                    currentSearchValue: action.value,
+                    currentSearchValue: action.value.trimStart(),
                 }
             };
         }
@@ -156,14 +160,18 @@ export const searchSimilarCitiesCreator = (clear) => ({type: SEARCH_SIMILAR_CITI
 
 
 export const getTodayWeather = (location) => async (dispatch) => {
-    let response = await weatherAPI.getTodayWeather(location);
-    if (response) {
-        dispatch(setTodayWeatherCreator({
-            description: response.weather[0].main,
-            temperature: Math.round(response.main.temp),
-            clouds: response.clouds.all,
-            weatherIcon: response.weather[0].icon,
-        }));
+    try {
+        let response = await weatherAPI.getTodayWeather(location);
+        if (response) {
+            dispatch(setTodayWeatherCreator({
+                description: response.weather[0].main,
+                temperature: Math.round(response.main.temp),
+                clouds: response.clouds.all,
+                weatherIcon: response.weather[0].icon,
+            }));
+        }
+    }catch (e) {
+        console.log(e)
     }
 }
 
