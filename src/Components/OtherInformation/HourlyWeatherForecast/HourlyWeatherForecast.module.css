@@ -1,0 +1,17 @@
+.weekWeatherForecast{
+    width: 100%;
+}
+.weekWeatherForecast__container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chooseForecast{
+    display: flex;
+    justify-content: center;
+}
+.weekWeatherForecast__week{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+}

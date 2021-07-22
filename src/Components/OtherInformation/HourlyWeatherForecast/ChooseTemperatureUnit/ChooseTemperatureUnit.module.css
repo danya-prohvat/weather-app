@@ -1,0 +1,31 @@
+.chooseTemperatureUnit{
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.temperatureCircle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #000000;
+    color: #FFFFFF;
+    padding-left: 6px;
+    box-sizing: border-box;
+    font-size: 20px;
+    line-height: 40px;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: .1s;
+}
+
+.temperatureCircle_active{
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.temperatureCircle:hover{
+    box-shadow: 0px 0px 10px 7px rgba(0,0,0,0.1);
+}

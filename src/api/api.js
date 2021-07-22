@@ -12,5 +12,9 @@ export const weatherAPI = {
     getTodayWeather(location)  {
             return instance.get(`weather?q=${location},UA&lang=ru&units=metric&appid=${API_KEY}`)
                 .then(response => response.data)
+    },
+    getWeekWeather(location)  {
+        return instance.get(`forecast/?q=${location},UA&lang=ru&units=metric&cnt=9&appid=${API_KEY}`)
+            .then(response => response.data)
     }
 }

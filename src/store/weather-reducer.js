@@ -4,6 +4,8 @@ const SET_TODAY_WEATHER = 'SET_TODAY_WEATHER';
 const SET_CURRENT_LOCATION = 'SET-CURRENT-LOCATION';
 const CHANGE_CURRENT_SEARCH_VALUE = 'CHANGE-CURRENT-SEARCH-VALUE';
 const SEARCH_SIMILAR_CITIES = 'SEARCH-SIMILAR-CITIES';
+const SET_TEMPERATURE_UNIT = 'SET-TEMPERATURE-UNIT';
+const SET_HOURLY_WEATHER_FORECAST = 'SET-HOURLY-WEATHER-FORECAST';
 
 const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 const ukrCities = ['Белгород Днестровский',
@@ -78,6 +80,7 @@ const ukrCities = ['Белгород Днестровский',
 
 let initialState = {
     temperatureUnit: 'C',
+    temperatureModeFahrenheit: false,
     currentLocation: 'Винница',
     searchData: {
         currentSearchValue: '',
@@ -89,9 +92,21 @@ let initialState = {
     },
     todayWeather: {
         description: '',
+        temperatureInCelsius: null,
         temperature: null,
         clouds: '',
-    }
+    },
+    hourlyWeatherForecast: [
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+        {time: '', weatherIcon: '', temp: ''},
+    ]
 };
 
 
@@ -113,7 +128,8 @@ const weatherReducer = (state = initialState, action) => {
                 todayWeather: {
                     ...state.todayWeather,
                     description: action.weather.description,
-                    temperature: action.weather.temperature,
+                    temperatureInCelsius: action.weather.temperature,
+                    temperature: Math.round(state.temperatureModeFahrenheit ? (action.weather.temperature * (9 / 5)) + 32 : action.weather.temperature),
                     clouds: action.weather.clouds,
                     weatherIcon: action.weather.weatherIcon,
                 }
@@ -148,6 +164,42 @@ const weatherReducer = (state = initialState, action) => {
                 }
             };
         }
+        case SET_TEMPERATURE_UNIT: {
+            return {
+                ...state,
+                temperatureUnit: action.unit,
+                temperatureModeFahrenheit: action.unit === 'F' ? true : false,
+                todayWeather: {
+                    ...state.todayWeather,
+                    temperature: Math.round(action.unit === 'F' ? (state.todayWeather.temperatureInCelsius * (9 / 5)) + 32 : +state.todayWeather.temperatureInCelsius),
+                }
+            };
+        }
+        case SET_HOURLY_WEATHER_FORECAST: {
+            console.log(action.list)
+            return {
+                ...state,
+                // hourlyWeatherForecast: [
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                //     {time: '', weatherIcon: '', Temp: ''},
+                // ]
+                hourlyWeatherForecast: state.hourlyWeatherForecast.map((el, ind) => {
+                    return {
+                        ...el,
+                        weatherIcon: action.list[ind].weather[0].icon,
+                        temp: Math.round(action.list[ind].main.temp),
+                        time: action.list[ind].dt_txt.slice(11, 16)
+                    }
+                })
+            };
+        }
         default:
             return state;
     }
@@ -157,9 +209,11 @@ export const setTodayWeatherCreator = (weather) => ({type: SET_TODAY_WEATHER, we
 export const setCurrentLocationCreator = (city) => ({type: SET_CURRENT_LOCATION, city})
 export const changeCurrentSearchValueCreator = (value) => ({type: CHANGE_CURRENT_SEARCH_VALUE, value})
 export const searchSimilarCitiesCreator = (clear) => ({type: SEARCH_SIMILAR_CITIES, clear})
+export const setTemperatureUnitCreator = (unit) => ({type: SET_TEMPERATURE_UNIT, unit})
+export const setHourlyWeatherForecast = (list) => ({type: SET_HOURLY_WEATHER_FORECAST, list})
 
 
-export const getTodayWeather = (location) => async (dispatch) => {
+export const getTodayWeather = (location, temperatureUnit) => async (dispatch) => {
     try {
         let response = await weatherAPI.getTodayWeather(location);
         if (response) {
@@ -170,7 +224,18 @@ export const getTodayWeather = (location) => async (dispatch) => {
                 weatherIcon: response.weather[0].icon,
             }));
         }
-    }catch (e) {
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const getWeekWeather = (location) => async (dispatch) => {
+    try {
+        let response = await weatherAPI.getWeekWeather(location);
+        if (response) {
+            dispatch(setHourlyWeatherForecast(response.list));
+        }
+    } catch (e) {
         console.log(e)
     }
 }
