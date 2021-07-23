@@ -2,13 +2,11 @@ import React from "react";
 import styles from './ChooseTemperatureUnit.module.css';
 import classNames from 'classnames';
 import {connect} from "react-redux";
-import {getTodayWeather, setTemperatureUnitCreator} from "../../../../store/weather-reducer";
+import {setTemperatureUnitCreator} from "../../../../store/weather-reducer";
 
 
 const ChooseTemperatureUnit = (props) => {
-    const temperatureCircleOnClick = event => {
-        props.setTemperatureUnitCreator(event.target.id);
-    }
+    const temperatureCircleOnClick = event => props.setTemperatureUnitCreator(event.target.id);
 
     return (<div className={classNames(styles.chooseTemperatureUnit)}>
         <div onClick={temperatureCircleOnClick} className={classNames(styles.temperatureCircle, {[styles.temperatureCircle_active]: props.temperatureUnit === 'C'})} id="C">°C</div>
@@ -18,7 +16,6 @@ const ChooseTemperatureUnit = (props) => {
 
 let mapStateToProps = (state) => ({
     temperatureUnit: state.weatherPage.temperatureUnit,
-    currentLocation: state.weatherPage.currentLocation,
 })
 
-export default connect(mapStateToProps, {getTodayWeather, setTemperatureUnitCreator})(ChooseTemperatureUnit);
+export default connect(mapStateToProps, {setTemperatureUnitCreator})(ChooseTemperatureUnit);

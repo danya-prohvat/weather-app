@@ -4,14 +4,12 @@ import classNames from 'classnames';
 import magnifier from '../../../assets/img/magnifier.png';
 
 const SearchInput = (props) => {
-
-    const citiesList = props.searchData.similarCityList.map((el, ind) => {
-        return <li onClick={props.cityItemOnClick} id={el} key={'citiesList' + ind}>{el}</li>
-    });
+    const citiesList = props.searchData.similarCityList.map((el, ind) => <li onClick={props.cityItemOnClick} id={el} key={'citiesList' + ind}>{el}</li>);
 
     return (<div className={classNames(styles.searchInput)}>
         <img src={magnifier} alt=""/>
-        <input value={props.searchData.currentSearchValue} onBlur={props.searchInputOnBlur} onChange={props.searchInputOnChange} placeholder='Город...'
+        <input value={props.searchData.currentSearchValue} onBlur={props.searchInputOnBlur}
+               onChange={props.searchInputOnChange} placeholder='Город...'
                type="text"/>
         {props.searchData.similarCityList.length > 0 && <ul className={classNames(styles.searchInput__dropDownList)}>
             {citiesList}

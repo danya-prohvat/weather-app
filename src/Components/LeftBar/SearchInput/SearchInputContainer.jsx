@@ -9,9 +9,7 @@ import SearchInput from "./SearchInput";
 
 
 const SearchInputContainer = (props) => {
-    const cityItemOnClick = event => {
-        props.setCurrentLocationCreator(event.target.id);
-    }
+    const cityItemOnClick = event => props.setCurrentLocationCreator(event.target.id);
 
     const searchInputOnChange = event => {
         props.changeCurrentSearchValueCreator(event.target.value);
@@ -22,7 +20,8 @@ const SearchInputContainer = (props) => {
         setTimeout(() => props.searchSimilarCitiesCreator(true), 100);
     }
 
-    return (<SearchInput searchInputOnBlur={searchInputOnBlur} searchInputOnChange={searchInputOnChange} cityItemOnClick={cityItemOnClick} searchData={props.searchData}/>);
+    return (<SearchInput searchInputOnBlur={searchInputOnBlur} searchInputOnChange={searchInputOnChange}
+                         cityItemOnClick={cityItemOnClick} searchData={props.searchData}/>);
 }
 
 
@@ -30,4 +29,8 @@ let mapStateToProps = (state) => ({
     searchData: state.weatherPage.searchData,
 })
 
-export default connect(mapStateToProps, {changeCurrentSearchValueCreator, searchSimilarCitiesCreator, setCurrentLocationCreator})(SearchInputContainer);
+export default connect(mapStateToProps, {
+    changeCurrentSearchValueCreator,
+    searchSimilarCitiesCreator,
+    setCurrentLocationCreator
+})(SearchInputContainer);

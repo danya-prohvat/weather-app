@@ -184,14 +184,14 @@ const weatherReducer = (state = initialState, action) => {
         default:
             return state;
     }
-
 }
+
 export const setTodayWeatherCreator = (weather) => ({type: SET_TODAY_WEATHER, weather})
 export const setCurrentLocationCreator = (city) => ({type: SET_CURRENT_LOCATION, city})
 export const changeCurrentSearchValueCreator = (value) => ({type: CHANGE_CURRENT_SEARCH_VALUE, value})
 export const searchSimilarCitiesCreator = (clear) => ({type: SEARCH_SIMILAR_CITIES, clear})
 export const setTemperatureUnitCreator = (unit) => ({type: SET_TEMPERATURE_UNIT, unit})
-export const setHourlyWeatherForecast = (list) => ({type: SET_HOURLY_WEATHER_FORECAST, list})
+export const setHourlyWeatherForecastCreator = (list) => ({type: SET_HOURLY_WEATHER_FORECAST, list})
 
 
 export const getTodayWeather = (location, temperatureUnit) => async (dispatch) => {
@@ -214,7 +214,7 @@ export const getHourlyWeatherForecasts = (location, temperatureUnit) => async (d
     try {
         let response = await weatherAPI.getWeekWeather(location, temperatureUnit);
         if (response) {
-            dispatch(setHourlyWeatherForecast(response.list));
+            dispatch(setHourlyWeatherForecastCreator(response.list));
         }
     } catch (e) {
         console.log(e)

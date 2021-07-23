@@ -5,9 +5,9 @@ import ChooseTemperatureUnit from "./ChooseTemperatureUnit/ChooseTemperatureUnit
 import HourlyContainer from "./HourlyItems/HourlyContainer";
 
 const HourlyWeatherForecast = (props) => {
-    return (<div className={classNames(styles.weekWeatherForecast)}>
-        <div className={classNames(styles.weekWeatherForecast__container)}>
-            <span className={classNames(styles.weekWeatherForecast__week)}>Week</span>
+    return (<div className={classNames(styles.hourlyWeatherForecast)}>
+        <div className={classNames(styles.hourlyWeatherForecast__container)}>
+            <span className={classNames(styles.hourlyWeatherForecast__week)}>Сегодня</span>
             <ChooseTemperatureUnit/>
         </div>
         <HourlyContainer/>

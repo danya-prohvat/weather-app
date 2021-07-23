@@ -9,7 +9,8 @@ const OneDayWeatherForecastContainer = (props) => {
         props.getTodayWeather(props.currentLocation, props.temperatureUnit);
     }, [props.currentLocation, props.temperatureUnit])
 
-    return (<OneDayWeatherForecast currentLocation={props.currentLocation} temperatureUnit={props.temperatureUnit} todayWeather={props.todayWeather} todayData={props.todayData} />);
+    return (<OneDayWeatherForecast currentLocation={props.currentLocation} temperatureUnit={props.temperatureUnit}
+                                   todayWeather={props.todayWeather} todayData={props.todayData}/>);
 }
 
 
