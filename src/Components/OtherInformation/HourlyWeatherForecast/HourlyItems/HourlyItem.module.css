@@ -1,0 +1,30 @@
+.hourlyItemWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px;
+}
+
+.hourlyItem {
+    padding: 12px 15px;
+    background-color: #FEFEFE;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hourlyItem__time{
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+
+.hourlyItem__img{
+    width: 80px;
+}
+
+.hourlyItem__temp{
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    font-size: 18px;
+}

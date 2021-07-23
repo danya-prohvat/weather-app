@@ -9,12 +9,14 @@ const instance = axios.create({
 
 
 export const weatherAPI = {
-    getTodayWeather(location)  {
-            return instance.get(`weather?q=${location},UA&lang=ru&units=metric&appid=${API_KEY}`)
+    getTodayWeather(location, temperatureUnit)  {
+        const unit = temperatureUnit === 'C' ? 'metric' : 'imperial';
+            return instance.get(`weather?q=${location},UA&lang=ru&units=${unit}&appid=${API_KEY}`)
                 .then(response => response.data)
     },
-    getWeekWeather(location)  {
-        return instance.get(`forecast/?q=${location},UA&lang=ru&units=metric&cnt=9&appid=${API_KEY}`)
+    getWeekWeather(location, temperatureUnit)  {
+        const unit = temperatureUnit === 'C' ? 'metric' : 'imperial';
+        return instance.get(`forecast/?q=${location},UA&lang=ru&units=${unit}&cnt=9&appid=${API_KEY}`)
             .then(response => response.data)
     }
 }

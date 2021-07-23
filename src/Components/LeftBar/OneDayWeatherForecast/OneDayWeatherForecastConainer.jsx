@@ -6,8 +6,8 @@ import {getTodayWeather} from "../../../store/weather-reducer";
 
 const OneDayWeatherForecastContainer = (props) => {
     useEffect(() => {
-        props.getTodayWeather(props.currentLocation);
-    }, [props.currentLocation])
+        props.getTodayWeather(props.currentLocation, props.temperatureUnit);
+    }, [props.currentLocation, props.temperatureUnit])
 
     return (<OneDayWeatherForecast currentLocation={props.currentLocation} temperatureUnit={props.temperatureUnit} todayWeather={props.todayWeather} todayData={props.todayData} />);
 }

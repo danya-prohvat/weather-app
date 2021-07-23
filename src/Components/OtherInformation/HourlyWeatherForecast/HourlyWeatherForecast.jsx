@@ -8,9 +8,9 @@ const HourlyWeatherForecast = (props) => {
     return (<div className={classNames(styles.weekWeatherForecast)}>
         <div className={classNames(styles.weekWeatherForecast__container)}>
             <span className={classNames(styles.weekWeatherForecast__week)}>Week</span>
-            <ChooseTemperatureUnit />
+            <ChooseTemperatureUnit/>
         </div>
-        <HourlyContainer />
+        <HourlyContainer/>
     </div>);
 }
 

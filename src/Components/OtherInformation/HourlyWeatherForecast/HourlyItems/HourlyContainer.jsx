@@ -1,23 +1,30 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {getWeekWeather} from "../../../../store/weather-reducer";
+import {getHourlyWeatherForecasts} from "../../../../store/weather-reducer";
 import HourlyItem from "./HourlyItem";
+import classNames from "classnames";
+import styles from "../HourlyItems/HourlyItem.module.css";
 
 
 const HourlyContainer = (props) => {
     useEffect(() => {
-        props.getWeekWeather(props.currentLocation);
-    }, [props.currentLocation])
+        props.getHourlyWeatherForecasts(props.currentLocation, props.temperatureUnit);
+    }, [props.currentLocation, props.temperatureUnit])
 
-    console.log(props.hourlyWeatherForecast);
+    const hourlyItemsList = props.hourlyWeatherForecast.map((el, ind) => <HourlyItem
+        time={props.hourlyWeatherForecast[ind].time} temp={props.hourlyWeatherForecast[ind].temp}
+        weatherIcon={props.hourlyWeatherForecast[ind].weatherIcon} key={'HourlyItem' + ind}/>)
 
-    return (<HourlyItem />);
+    return (<div className={classNames(styles.hourlyItemWrapper)}>
+        {hourlyItemsList}
+    </div>);
 }
-
 
 
 let mapStateToProps = (state) => ({
     hourlyWeatherForecast: state.weatherPage.hourlyWeatherForecast,
+    currentLocation: state.weatherPage.currentLocation,
+    temperatureUnit: state.weatherPage.temperatureUnit,
 })
 
-export default connect(mapStateToProps, {getWeekWeather})(HourlyContainer);
+export default connect(mapStateToProps, {getHourlyWeatherForecasts})(HourlyContainer);

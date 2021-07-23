@@ -80,7 +80,6 @@ const ukrCities = ['Белгород Днестровский',
 
 let initialState = {
     temperatureUnit: 'C',
-    temperatureModeFahrenheit: false,
     currentLocation: 'Винница',
     searchData: {
         currentSearchValue: '',
@@ -92,7 +91,6 @@ let initialState = {
     },
     todayWeather: {
         description: '',
-        temperatureInCelsius: null,
         temperature: null,
         clouds: '',
     },
@@ -128,8 +126,7 @@ const weatherReducer = (state = initialState, action) => {
                 todayWeather: {
                     ...state.todayWeather,
                     description: action.weather.description,
-                    temperatureInCelsius: action.weather.temperature,
-                    temperature: Math.round(state.temperatureModeFahrenheit ? (action.weather.temperature * (9 / 5)) + 32 : action.weather.temperature),
+                    temperature: action.weather.temperature,
                     clouds: action.weather.clouds,
                     weatherIcon: action.weather.weatherIcon,
                 }
@@ -168,34 +165,18 @@ const weatherReducer = (state = initialState, action) => {
             return {
                 ...state,
                 temperatureUnit: action.unit,
-                temperatureModeFahrenheit: action.unit === 'F' ? true : false,
-                todayWeather: {
-                    ...state.todayWeather,
-                    temperature: Math.round(action.unit === 'F' ? (state.todayWeather.temperatureInCelsius * (9 / 5)) + 32 : +state.todayWeather.temperatureInCelsius),
-                }
             };
         }
         case SET_HOURLY_WEATHER_FORECAST: {
-            console.log(action.list)
             return {
                 ...state,
-                // hourlyWeatherForecast: [
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                //     {time: '', weatherIcon: '', Temp: ''},
-                // ]
                 hourlyWeatherForecast: state.hourlyWeatherForecast.map((el, ind) => {
+                    const time = +action.list[ind].dt_txt.slice(11, 13) + action.list[ind].dt_txt.slice(13, 16);
                     return {
                         ...el,
                         weatherIcon: action.list[ind].weather[0].icon,
                         temp: Math.round(action.list[ind].main.temp),
-                        time: action.list[ind].dt_txt.slice(11, 16)
+                        time: time
                     }
                 })
             };
@@ -215,7 +196,7 @@ export const setHourlyWeatherForecast = (list) => ({type: SET_HOURLY_WEATHER_FOR
 
 export const getTodayWeather = (location, temperatureUnit) => async (dispatch) => {
     try {
-        let response = await weatherAPI.getTodayWeather(location);
+        let response = await weatherAPI.getTodayWeather(location, temperatureUnit);
         if (response) {
             dispatch(setTodayWeatherCreator({
                 description: response.weather[0].main,
@@ -229,9 +210,9 @@ export const getTodayWeather = (location, temperatureUnit) => async (dispatch) =
     }
 }
 
-export const getWeekWeather = (location) => async (dispatch) => {
+export const getHourlyWeatherForecasts = (location, temperatureUnit) => async (dispatch) => {
     try {
-        let response = await weatherAPI.getWeekWeather(location);
+        let response = await weatherAPI.getWeekWeather(location, temperatureUnit);
         if (response) {
             dispatch(setHourlyWeatherForecast(response.list));
         }
