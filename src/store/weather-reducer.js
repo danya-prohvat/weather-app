@@ -6,6 +6,7 @@ const CHANGE_CURRENT_SEARCH_VALUE = 'CHANGE-CURRENT-SEARCH-VALUE';
 const SEARCH_SIMILAR_CITIES = 'SEARCH-SIMILAR-CITIES';
 const SET_TEMPERATURE_UNIT = 'SET-TEMPERATURE-UNIT';
 const SET_HOURLY_WEATHER_FORECAST = 'SET-HOURLY-WEATHER-FORECAST';
+const SET_TODAY_INDICATORS = 'SET-TODAY-INDICATORS';
 
 const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 const ukrCities = ['Белгород Днестровский',
@@ -94,6 +95,26 @@ let initialState = {
         temperature: null,
         clouds: '',
     },
+    todayIndicators: {
+        humidity: null,
+        pressure: null,
+        sunData: {
+            sunrise: null,
+            sunset: null,
+        },
+        temperatureData: {
+            temp_min: null,
+            temp_max: null,
+        },
+        visibilityData: {
+            visibility: null,
+            visibilityDescription: '',
+        },
+        windData: {
+            wind: null,
+            windDirection: '',
+        },
+    },
     hourlyWeatherForecast: [
         {time: '', weatherIcon: '', temp: ''},
         {time: '', weatherIcon: '', temp: ''},
@@ -181,6 +202,22 @@ const weatherReducer = (state = initialState, action) => {
                 })
             };
         }
+        case SET_TODAY_INDICATORS: {
+            let sunriseTime = new Date(action.indicators.sunrise * 1000);
+            let sunsetTime = new Date(action.indicators.sunset * 1000);
+            return {
+                ...state,
+                todayIndicators: {
+                    ...state.todayIndicators,
+                    humidity: action.indicators.humidity,
+                    pressure: action.indicators.pressure,
+                    sunData: {
+                        sunrise: sunriseTime.getHours() + ':' + (sunriseTime.getMinutes() < 10 ? '0' + sunriseTime.getMinutes() : sunriseTime.getMinutes()),
+                        sunset: sunsetTime.getHours() + ':' + (sunsetTime.getMinutes() < 10 ? '0' + sunsetTime.getMinutes() : sunsetTime.getMinutes()),
+                    }
+                }
+            };
+        }
         default:
             return state;
     }
@@ -192,12 +229,25 @@ export const changeCurrentSearchValueCreator = (value) => ({type: CHANGE_CURRENT
 export const searchSimilarCitiesCreator = (clear) => ({type: SEARCH_SIMILAR_CITIES, clear})
 export const setTemperatureUnitCreator = (unit) => ({type: SET_TEMPERATURE_UNIT, unit})
 export const setHourlyWeatherForecastCreator = (list) => ({type: SET_HOURLY_WEATHER_FORECAST, list})
+export const setTodayIndicatorsCreator = (indicators) => ({type: SET_TODAY_INDICATORS, indicators})
 
 
 export const getTodayWeather = (location, temperatureUnit) => async (dispatch) => {
     try {
         let response = await weatherAPI.getTodayWeather(location, temperatureUnit);
         if (response) {
+            dispatch(setTodayIndicatorsCreator({
+                humidity: response.main.humidity,
+                pressure: response.main.pressure,
+                visibility: response.visibility,
+                temp_max: response.main.temp_max,
+                temp_min: response.main.temp_min,
+                sunrise: response.sys.sunrise,
+                sunset: response.sys.sunset,
+                windSpeed: response.wind.speed,
+                windDeg: response.wind.deg,
+                dt: response.dt,
+            }));
             dispatch(setTodayWeatherCreator({
                 description: response.weather[0].main,
                 temperature: Math.round(response.main.temp),
