@@ -16,12 +16,12 @@ const TodayIndicators = (props) => {
     return (<div className={classNames(styles.TodayIndicators)}>
         <span className={classNames(styles.TodayIndicators__title)}>TodayIndicators</span>
         <div className={classNames(styles.TodayIndicators__container)}>
-            <Humidity />
-            <MinMaxTemp />
-            <Pressure />
-            <SunriseSunset />
-            <Visibility />
-            <WindStatus />
+            <Humidity humidity={props.todayIndicators.humidity} />
+            <MinMaxTemp temperatureData={props.todayIndicators.temperatureData} />
+            <Pressure pressure={props.todayIndicators.pressure} />
+            <SunriseSunset sunData={props.todayIndicators.sunData} />
+            <Visibility visibilityData={props.todayIndicators.visibilityData} />
+            <WindStatus windData={props.todayIndicators.windData} />
         </div>
     </div>);
 }

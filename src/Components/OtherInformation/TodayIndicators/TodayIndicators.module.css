@@ -16,7 +16,91 @@
 .todayIndicatorsItem {
     background-color: #FFFFFF;
     width: 30%;
+    height: 300px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, .1);
     margin-bottom: 30px;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
+.todayIndicatorsItem h3 {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #9f9f9f;
+}
+
+.todayIndicatorsItem p {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #9f9f9f;
+}
+
+.numberPerHour {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    font-size: 30px;
+}
+
+.numberPerHour sub {
+    font-size: 18px;
+    margin: 0;
+}
+
+.minMaxTemp__container {
+
+}
+
+.minMaxTemp__container div {
+    display: flex;
+}
+
+.minMaxTemp__digit {
+    margin-left: 15px;
+}
+
+.sunriseSunset__container {
+
+}
+
+.sunriseSunset__container div {
+    display: flex;
+}
+
+.sunriseSunset__digit {
+    margin-left: 15px;
+}
+
+.humidity__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.humidity__digit {
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.humidity__scale {
+    width: 26px;
+    height: 156px;
+    border-radius: 50px;
+    border: 1px solid #C4CDD8;
+    position: relative;
+}
+
+.humidity__scale div {
+    width: 86%;
+    /*height: 150px;*/
+    border-radius: 50px;
+    background-color: #4050D1;
+    position: absolute;
+    left: 7.5%;
+    bottom: 3px;
+}
+
+

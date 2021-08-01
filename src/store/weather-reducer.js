@@ -205,6 +205,12 @@ const weatherReducer = (state = initialState, action) => {
         case SET_TODAY_INDICATORS: {
             let sunriseTime = new Date(action.indicators.sunrise * 1000);
             let sunsetTime = new Date(action.indicators.sunset * 1000);
+            let visibility = Math.floor(action.indicators.visibility / 1000);
+            let windDirection = '';
+            if (action.indicators.windDeg >= 225 && action.indicators.windDeg < 315) windDirection = 'Запад';
+            else if (action.indicators.windDeg >= 135 && action.indicators.windDeg < 225) windDirection = 'Юг';
+            else if (action.indicators.windDeg >= 45 && action.indicators.windDeg < 135) windDirection = 'Восток';
+            else windDirection = 'Север';
             return {
                 ...state,
                 todayIndicators: {
@@ -214,7 +220,19 @@ const weatherReducer = (state = initialState, action) => {
                     sunData: {
                         sunrise: sunriseTime.getHours() + ':' + (sunriseTime.getMinutes() < 10 ? '0' + sunriseTime.getMinutes() : sunriseTime.getMinutes()),
                         sunset: sunsetTime.getHours() + ':' + (sunsetTime.getMinutes() < 10 ? '0' + sunsetTime.getMinutes() : sunsetTime.getMinutes()),
-                    }
+                    },
+                    temperatureData: {
+                        temp_min: action.indicators.temp_min,
+                        temp_max: action.indicators.temp_max,
+                    },
+                    visibilityData: {
+                        visibility: visibility,
+                        visibilityDescription: visibility < 10 ? 'Плохая видимость' : 'Хорошая видимость',
+                    },
+                    windData: {
+                        wind: action.indicators.windSpeed,
+                        windDirection: windDirection,
+                    },
                 }
             };
         }
