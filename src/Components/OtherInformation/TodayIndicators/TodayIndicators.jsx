@@ -9,12 +9,8 @@ import Visibility from "./Visibility/Visibility";
 import WindStatus from "./WindStatus/WindStatus";
 
 const TodayIndicators = (props) => {
-
-    console.log('was');
-    console.log(props.todayIndicators)
-
     return (<div className={classNames(styles.TodayIndicators)}>
-        <span className={classNames(styles.TodayIndicators__title)}>TodayIndicators</span>
+        <span className={classNames(styles.TodayIndicators__title)}>Сегодняшние параметры</span>
         <div className={classNames(styles.TodayIndicators__container)}>
             <Humidity humidity={props.todayIndicators.humidity} />
             <MinMaxTemp temperatureData={props.todayIndicators.temperatureData} />

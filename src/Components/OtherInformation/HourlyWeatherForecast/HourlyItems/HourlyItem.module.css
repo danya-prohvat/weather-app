@@ -6,13 +6,23 @@
 }
 
 .hourlyItem {
+    width: 8%;
+    height: 155px;
+    margin-bottom: 40px;
+    min-width: 85px;
     padding: 12px 15px;
+    box-sizing: border-box;
     background-color: #FEFEFE;
     border-radius: 20px;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+}
+
+.hourlyItem__wrapper{
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
 }
 
 .hourlyItem__time{
@@ -21,7 +31,7 @@
 }
 
 .hourlyItem__img{
-    width: 80px;
+    width: 100%;
 }
 
 .hourlyItem__temp{

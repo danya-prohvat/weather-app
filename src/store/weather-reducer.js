@@ -7,8 +7,9 @@ const SEARCH_SIMILAR_CITIES = 'SEARCH-SIMILAR-CITIES';
 const SET_TEMPERATURE_UNIT = 'SET-TEMPERATURE-UNIT';
 const SET_HOURLY_WEATHER_FORECAST = 'SET-HOURLY-WEATHER-FORECAST';
 const SET_TODAY_INDICATORS = 'SET-TODAY-INDICATORS';
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 
-const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 const ukrCities = ['Белгород Днестровский',
     'Белосарайская коса',
     'Бердянск',
@@ -82,6 +83,7 @@ const ukrCities = ['Белгород Днестровский',
 let initialState = {
     temperatureUnit: 'C',
     currentLocation: 'Винница',
+    isFetching: false,
     searchData: {
         currentSearchValue: '',
         similarCityList: [],
@@ -136,13 +138,12 @@ const weatherReducer = (state = initialState, action) => {
             let hours = todayData.getHours() < 10 ? '0' + todayData.getHours() : todayData.getHours();
             let minutes = todayData.getMinutes() < 10 ? '0' + todayData.getMinutes() : todayData.getMinutes();
             let dayOfWeek = todayData.getDay();
-
             return {
                 ...state,
                 todayData: {
                     ...state.todayData,
                     time: `${hours}:${minutes}`,
-                    dayOfWeek: daysOfWeek[dayOfWeek - 1],
+                    dayOfWeek: daysOfWeek[dayOfWeek],
                 },
                 todayWeather: {
                     ...state.todayWeather,
@@ -216,14 +217,14 @@ const weatherReducer = (state = initialState, action) => {
                 todayIndicators: {
                     ...state.todayIndicators,
                     humidity: action.indicators.humidity,
-                    pressure: action.indicators.pressure,
+                    pressure: Math.round(action.indicators.pressure / 10),
                     sunData: {
                         sunrise: sunriseTime.getHours() + ':' + (sunriseTime.getMinutes() < 10 ? '0' + sunriseTime.getMinutes() : sunriseTime.getMinutes()),
                         sunset: sunsetTime.getHours() + ':' + (sunsetTime.getMinutes() < 10 ? '0' + sunsetTime.getMinutes() : sunsetTime.getMinutes()),
                     },
                     temperatureData: {
-                        temp_min: action.indicators.temp_min,
-                        temp_max: action.indicators.temp_max,
+                        temp_min: Math.floor(action.indicators.temp_min),
+                        temp_max: Math.floor(action.indicators.temp_max),
                     },
                     visibilityData: {
                         visibility: visibility,
@@ -234,6 +235,12 @@ const weatherReducer = (state = initialState, action) => {
                         windDirection: windDirection,
                     },
                 }
+            };
+        }
+        case TOGGLE_IS_FETCHING: {
+            return {
+                ...state,
+                isFetching: action.bool,
             };
         }
         default:
@@ -248,10 +255,12 @@ export const searchSimilarCitiesCreator = (clear) => ({type: SEARCH_SIMILAR_CITI
 export const setTemperatureUnitCreator = (unit) => ({type: SET_TEMPERATURE_UNIT, unit})
 export const setHourlyWeatherForecastCreator = (list) => ({type: SET_HOURLY_WEATHER_FORECAST, list})
 export const setTodayIndicatorsCreator = (indicators) => ({type: SET_TODAY_INDICATORS, indicators})
+export const toggleIsFetchingCreator = (bool) => ({type: TOGGLE_IS_FETCHING, bool})
 
 
 export const getTodayWeather = (location, temperatureUnit) => async (dispatch) => {
     try {
+        dispatch(toggleIsFetchingCreator(true));
         let response = await weatherAPI.getTodayWeather(location, temperatureUnit);
         if (response) {
             dispatch(setTodayIndicatorsCreator({
@@ -273,6 +282,7 @@ export const getTodayWeather = (location, temperatureUnit) => async (dispatch) =
                 weatherIcon: response.weather[0].icon,
             }));
         }
+        dispatch(toggleIsFetchingCreator(false));
     } catch (e) {
         console.log(e)
     }
@@ -280,10 +290,12 @@ export const getTodayWeather = (location, temperatureUnit) => async (dispatch) =
 
 export const getHourlyWeatherForecasts = (location, temperatureUnit) => async (dispatch) => {
     try {
+        dispatch(toggleIsFetchingCreator(true));
         let response = await weatherAPI.getWeekWeather(location, temperatureUnit);
         if (response) {
             dispatch(setHourlyWeatherForecastCreator(response.list));
         }
+        dispatch(toggleIsFetchingCreator(false));
     } catch (e) {
         console.log(e)
     }

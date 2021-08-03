@@ -13,7 +13,7 @@ const HourlyContainer = (props) => {
 
     const hourlyItemsList = props.hourlyWeatherForecast.map((el, ind) => <HourlyItem
         time={props.hourlyWeatherForecast[ind].time} temp={props.hourlyWeatherForecast[ind].temp}
-        weatherIcon={props.hourlyWeatherForecast[ind].weatherIcon} key={'HourlyItem' + ind}/>)
+        weatherIcon={props.hourlyWeatherForecast[ind].weatherIcon} isFetching={props.isFetching} key={'HourlyItem' + ind}/>)
 
     return (<div className={classNames(styles.hourlyItemWrapper)}>
         {hourlyItemsList}
@@ -25,6 +25,7 @@ let mapStateToProps = (state) => ({
     hourlyWeatherForecast: state.weatherPage.hourlyWeatherForecast,
     currentLocation: state.weatherPage.currentLocation,
     temperatureUnit: state.weatherPage.temperatureUnit,
+    isFetching: state.weatherPage.isFetching,
 })
 
 export default connect(mapStateToProps, {getHourlyWeatherForecasts})(HourlyContainer);

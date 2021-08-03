@@ -2,6 +2,8 @@ import React from "react";
 import styles from './OneDayWeatherForecast.module.css';
 import classNames from 'classnames';
 import cloud from '../../../assets/img/cloud.png';
+import {showPreloader} from "../../hoc/RedirectToPreloader";
+
 
 
 const OneDayWeatherForecast = (props) => {
@@ -27,4 +29,4 @@ const OneDayWeatherForecast = (props) => {
 }
 
 
-export default OneDayWeatherForecast;
+export default showPreloader(OneDayWeatherForecast);
