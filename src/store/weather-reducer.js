@@ -257,46 +257,44 @@ export const setHourlyWeatherForecastCreator = (list) => ({type: SET_HOURLY_WEAT
 export const setTodayIndicatorsCreator = (indicators) => ({type: SET_TODAY_INDICATORS, indicators})
 export const toggleIsFetchingCreator = (bool) => ({type: TOGGLE_IS_FETCHING, bool})
 
-
-export const getTodayWeather = (location, temperatureUnit) => async (dispatch) => {
+export const getWeather = (location, temperatureUnit) => async (dispatch) => {
     try {
         dispatch(toggleIsFetchingCreator(true));
-        let response = await weatherAPI.getTodayWeather(location, temperatureUnit);
-        if (response) {
-            dispatch(setTodayIndicatorsCreator({
-                humidity: response.main.humidity,
-                pressure: response.main.pressure,
-                visibility: response.visibility,
-                temp_max: response.main.temp_max,
-                temp_min: response.main.temp_min,
-                sunrise: response.sys.sunrise,
-                sunset: response.sys.sunset,
-                windSpeed: response.wind.speed,
-                windDeg: response.wind.deg,
-                dt: response.dt,
-            }));
-            dispatch(setTodayWeatherCreator({
-                description: response.weather[0].main,
-                temperature: Math.round(response.main.temp),
-                clouds: response.clouds.all,
-                weatherIcon: response.weather[0].icon,
-            }));
-        }
-        dispatch(toggleIsFetchingCreator(false));
-    } catch (e) {
-        console.log(e)
-    }
-}
 
-export const getHourlyWeatherForecasts = (location, temperatureUnit) => async (dispatch) => {
-    try {
-        dispatch(toggleIsFetchingCreator(true));
-        let response = await weatherAPI.getWeekWeather(location, temperatureUnit);
-        if (response) {
-            dispatch(setHourlyWeatherForecastCreator(response.list));
-        }
+        let requests = [
+            await weatherAPI.getHourlyWeather(location, temperatureUnit),
+            await weatherAPI.getTodayWeather(location, temperatureUnit),
+            await weatherAPI.getSomeTodayIndicators(location)
+        ];
+
+        Promise.all(requests)
+            .then(weatherData => {
+                console.log(weatherData)
+                dispatch(setHourlyWeatherForecastCreator(weatherData[0].list));
+                dispatch(setTodayWeatherCreator({
+                    description: weatherData[1].weather[0].main,
+                    temperature: Math.round(weatherData[1].main.temp),
+                    clouds: weatherData[1].clouds.all,
+                    weatherIcon: weatherData[1].weather[0].icon,
+                }));
+                dispatch(setTodayIndicatorsCreator({
+                    humidity: weatherData[2].main.humidity,
+                    pressure: weatherData[1].main.pressure,
+                    visibility: weatherData[1].visibility,
+                    temp_max: weatherData[1].main.temp_max,
+                    temp_min: weatherData[1].main.temp_min,
+                    sunrise: weatherData[1].sys.sunrise,
+                    sunset: weatherData[1].sys.sunset,
+                    windSpeed: weatherData[2].wind.speed,
+                    windDeg: weatherData[2].wind.deg,
+                    dt: weatherData[1].dt,
+                }));
+            })
+            .catch(e => console.log(e))
+
         dispatch(toggleIsFetchingCreator(false));
     } catch (e) {
+        alert('Ошибка сети');
         console.log(e)
     }
 }

@@ -1,13 +1,10 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import OneDayWeatherForecast from "./OneDayWeatherForecast";
-import {getTodayWeather} from "../../../store/weather-reducer";
 
 
 const OneDayWeatherForecastContainer = (props) => {
-    useEffect(() => {
-        props.getTodayWeather(props.currentLocation, props.temperatureUnit);
-    }, [props.currentLocation, props.temperatureUnit])
+
     return (<div>
             {/*{props.isFetching ? <Preloader />*/}
             {/*    : <OneDayWeatherForecast currentLocation={props.currentLocation} temperatureUnit={props.temperatureUnit}*/}
@@ -26,4 +23,4 @@ let mapStateToProps = (state) => ({
     currentLocation: state.weatherPage.currentLocation,
 })
 
-export default connect(mapStateToProps, {getTodayWeather})(OneDayWeatherForecastContainer);
+export default connect(mapStateToProps, {})(OneDayWeatherForecastContainer);
