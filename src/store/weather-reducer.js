@@ -10,8 +10,7 @@ const SET_TODAY_INDICATORS = 'SET-TODAY-INDICATORS';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 
 const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-const ukrCities = ['Белгород Днестровский',
-    'Белосарайская коса',
+const ukrCities = [
     'Бердянск',
     'Борисполь',
     'Буковель',
@@ -27,10 +26,8 @@ const ukrCities = ['Белгород Днестровский',
     'Житомир',
     'Закарпатье',
     'Запорожье',
-    'Ивано Франковск',
     'Ивано',
     'Ильичевск',
-    'Каменец Подольский',
     'Затока',
     'Киев',
     'Кирилловка',
@@ -212,6 +209,7 @@ const weatherReducer = (state = initialState, action) => {
             else if (action.indicators.windDeg >= 135 && action.indicators.windDeg < 225) windDirection = 'Юг';
             else if (action.indicators.windDeg >= 45 && action.indicators.windDeg < 135) windDirection = 'Восток';
             else windDirection = 'Север';
+
             return {
                 ...state,
                 todayIndicators: {
@@ -223,15 +221,15 @@ const weatherReducer = (state = initialState, action) => {
                         sunset: sunsetTime.getHours() + ':' + (sunsetTime.getMinutes() < 10 ? '0' + sunsetTime.getMinutes() : sunsetTime.getMinutes()),
                     },
                     temperatureData: {
-                        temp_min: Math.floor(action.indicators.temp_min),
-                        temp_max: Math.floor(action.indicators.temp_max),
+                        temp_min: Math.min(...state.hourlyWeatherForecast.map(el => el.temp)),
+                        temp_max: Math.max(...state.hourlyWeatherForecast.map(el => el.temp)),
                     },
                     visibilityData: {
                         visibility: visibility,
                         visibilityDescription: visibility < 10 ? 'Плохая видимость' : 'Хорошая видимость',
                     },
                     windData: {
-                        wind: action.indicators.windSpeed,
+                        wind: action.indicators.windSpeed.toFixed(1),
                         windDirection: windDirection,
                     },
                 }
@@ -269,7 +267,6 @@ export const getWeather = (location, temperatureUnit) => async (dispatch) => {
 
         Promise.all(requests)
             .then(weatherData => {
-                console.log(weatherData)
                 dispatch(setHourlyWeatherForecastCreator(weatherData[0].list));
                 dispatch(setTodayWeatherCreator({
                     description: weatherData[1].weather[0].main,
@@ -287,7 +284,6 @@ export const getWeather = (location, temperatureUnit) => async (dispatch) => {
                     sunset: weatherData[1].sys.sunset,
                     windSpeed: weatherData[2].wind.speed,
                     windDeg: weatherData[2].wind.deg,
-                    dt: weatherData[1].dt,
                 }));
             })
             .catch(e => console.log(e))

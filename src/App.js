@@ -9,7 +9,6 @@ import {useEffect} from "react";
 const App = (props) => {
     useEffect(() => {
         props.getWeather(props.currentLocation, props.temperatureUnit);
-        // props.getHourlyWeatherForecasts(props.currentLocation, props.temperatureUnit);
     }, [props.currentLocation, props.temperatureUnit])
 
     return (

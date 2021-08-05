@@ -6,8 +6,6 @@ const instance = axios.create({
     baseURL: 'https://api.openweathermap.org/data/2.5/'
 });
 
-
-
 export const weatherAPI = {
     getTodayWeather(location, temperatureUnit)  {
         const unit = temperatureUnit === 'C' ? 'metric' : 'imperial';
