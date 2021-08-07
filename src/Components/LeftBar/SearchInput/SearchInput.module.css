@@ -66,3 +66,13 @@
 .searchInput__dropDownList li:hover {
     transform: scale(1.01);
 }
+
+@media  (min-width: 992px) and (max-width: 1199px) {
+    .searchInput input {
+        height: 35px;
+    }
+
+    .searchInput img {
+        width: 20px;
+    }
+}

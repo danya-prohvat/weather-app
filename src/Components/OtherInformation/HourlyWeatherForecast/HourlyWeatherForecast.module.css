@@ -11,3 +11,9 @@
     font-size: 30px;
     font-weight: 600;
 }
+
+@media  (min-width: 992px) and (max-width: 1199px) {
+    .hourlyWeatherForecast__today{
+        font-size: 27px;
+    }
+}

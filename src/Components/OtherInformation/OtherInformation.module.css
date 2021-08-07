@@ -4,3 +4,9 @@
     padding: 30px;
     box-sizing: border-box;
 }
+
+@media  (min-width: 992px) and (max-width: 1199px) {
+    .otherInformation{
+        padding: 18px;
+    }
+}

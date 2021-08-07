@@ -27,7 +27,7 @@
     box-sizing: border-box;
 }
 
-.todayIndicatorsItem__wrapper{
+.todayIndicatorsItem__wrapper {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -173,12 +173,76 @@
 
 .humidity__scale div {
     width: 76%;
-    /*height: 150px;*/
     border-radius: 50px;
     background-color: #4050D1;
     position: absolute;
     left: 12%;
     bottom: 5px;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .todayIndicatorsItem {
+        min-width: 210px;
+        width: 30%;
+        height: 230px;
+        padding: 15px 20px;
+    }
+
+    .TodayIndicators__title {
+        font-size: 27px;;
+    }
+
+    .todayIndicatorsItem h3 {
+        font-size: 18px;
+    }
+
+    .todayIndicatorsItem p {
+        font-size: 16px;
+    }
+
+    .sunriseSunset__digit {
+        font-size: 25px;
+    }
+    .minMaxTemp__digit {
+        font-size: 25px;
+    }
+    .humidity__digit {
+        font-size: 25px;
+    }
+    .pressure__digit {
+        font-size: 25px;
+    }
+    .windStatus__digit {
+        font-size: 25px;
+    }
+    .visibility__digit {
+        font-size: 25px;
+    }
+
+    .sunriseSunset__img {
+        width: 35px;
+    }
+
+    .minMaxTemp__img {
+        height: 35px;
+    }
+
+    .humidity__scale {
+        width: 28px;
+        height: 158px;
+        border-radius: 50px;
+        border: 1px solid #C4CDD8;
+        position: relative;
+    }
+
+    .humidity__scale div {
+        width: 76%;
+        border-radius: 50px;
+        background-color: #4050D1;
+        position: absolute;
+        left: 13%;
+        bottom: 4px;
+    }
 }
 
 

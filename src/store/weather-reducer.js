@@ -13,7 +13,6 @@ const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вто�
 const ukrCities = [
     'Бердянск',
     'Борисполь',
-    'Буковель',
     'Верховина',
     'Винница',
     'Воловец',
@@ -21,23 +20,18 @@ const ukrCities = [
     'Днепропетровск',
     'Долина',
     'Донецк',
-    'Драгобрат',
     'Ждениево',
     'Житомир',
-    'Закарпатье',
     'Запорожье',
-    'Ивано',
     'Ильичевск',
     'Затока',
     'Киев',
-    'Кирилловка',
     'Кировоград',
     'Коблево',
     'Ковель',
     'Косов',
     'Кременчуг',
     'Кривой Рог',
-    'Кузнецовск',
     'Луганск',
     'Луцк',
     'Львов',
@@ -52,10 +46,8 @@ const ukrCities = [
     'Пилипец',
     'Полтава',
     'Поляна',
-    'Приморск',
     'Ровно',
     'Святогорск',
-    'Седово',
     'Славское',
     'Славянск',
     'Соледар',
@@ -73,8 +65,6 @@ const ukrCities = [
     'Черкассы',
     'Чернигов',
     'Черновцы',
-    'Щурово',
-    'Яремча',
     'Ясиня',];
 
 let initialState = {
@@ -171,7 +161,7 @@ const weatherReducer = (state = initialState, action) => {
             };
         }
         case SEARCH_SIMILAR_CITIES: {
-            const similarCitiesList = ukrCities.filter(el => el.toLowerCase().slice(0, state.searchData.currentSearchValue.trim().length) == state.searchData.currentSearchValue.trim().toLowerCase());
+            const similarCitiesList = ukrCities.filter(el => el.toLowerCase().slice(0, state.searchData.currentSearchValue.trim().length) === state.searchData.currentSearchValue.trim().toLowerCase());
             return {
                 ...state,
                 searchData: {

@@ -7,3 +7,10 @@
     padding: 35px 25px;
     box-sizing: border-box;
 }
+
+@media  (min-width: 992px) and (max-width: 1199px) {
+    .leftBar{
+        min-width: 250px;
+        padding: 35px 15px;
+    }
+}

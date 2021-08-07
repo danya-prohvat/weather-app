@@ -9,7 +9,7 @@ import {useEffect} from "react";
 const App = (props) => {
     useEffect(() => {
         props.getWeather(props.currentLocation, props.temperatureUnit);
-    }, [props.currentLocation, props.temperatureUnit])
+    }, [props])
 
     return (
         <div className="App">
