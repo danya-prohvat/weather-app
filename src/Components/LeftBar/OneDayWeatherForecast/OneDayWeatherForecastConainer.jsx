@@ -1,14 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import OneDayWeatherForecast from "./OneDayWeatherForecast";
 
-
 const OneDayWeatherForecastContainer = (props) => {
-
     return (<div>
-            {/*{props.isFetching ? <Preloader />*/}
-            {/*    : <OneDayWeatherForecast currentLocation={props.currentLocation} temperatureUnit={props.temperatureUnit}*/}
-            {/*                             todayWeather={props.todayWeather} todayData={props.todayData}/>}*/}
             <OneDayWeatherForecast currentLocation={props.currentLocation} temperatureUnit={props.temperatureUnit}
                                    todayWeather={props.todayWeather} todayData={props.todayData} />
         </div>

@@ -16,9 +16,7 @@ const SearchInputContainer = (props) => {
         props.searchSimilarCitiesCreator();
     }
 
-    const searchInputOnBlur = () => {
-        setTimeout(() => props.searchSimilarCitiesCreator(true), 100);
-    }
+    const searchInputOnBlur = () => setTimeout(() => props.searchSimilarCitiesCreator(true), 100);
 
     return (<SearchInput searchInputOnBlur={searchInputOnBlur} searchInputOnChange={searchInputOnChange}
                          cityItemOnClick={cityItemOnClick} searchData={props.searchData}/>);

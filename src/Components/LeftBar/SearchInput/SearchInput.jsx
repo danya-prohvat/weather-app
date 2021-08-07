@@ -17,5 +17,4 @@ const SearchInput = (props) => {
     </div>);
 }
 
-
 export default SearchInput;

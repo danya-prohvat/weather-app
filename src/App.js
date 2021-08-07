@@ -13,8 +13,8 @@ const App = (props) => {
 
     return (
         <div className="App">
-            <LeftBar/>
-            <OtherInformation/>
+            <LeftBar />
+            <OtherInformation />
         </div>
     );
 }

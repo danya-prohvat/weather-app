@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import cloud from '../../../assets/img/cloud.png';
 import {showPreloader} from "../../hoc/RedirectToPreloader";
 
-
-
 const OneDayWeatherForecast = (props) => {
     return (<div className={classNames(styles.oneDayWeatherForecast)}>
         <div className={classNames(styles.oneDayWeatherForecast__weatherIcon)}>
@@ -27,6 +25,5 @@ const OneDayWeatherForecast = (props) => {
         </div>
     </div>);
 }
-
 
 export default showPreloader(OneDayWeatherForecast);

@@ -79,7 +79,7 @@ const ukrCities = [
 
 let initialState = {
     temperatureUnit: 'C',
-    currentLocation: 'Винница',
+    currentLocation: 'Харьков',
     isFetching: false,
     searchData: {
         currentSearchValue: '',
