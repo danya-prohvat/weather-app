@@ -6,7 +6,6 @@ import sunrise from '../../../../assets/img/sunset.png';
 import {compose} from "redux";
 import {showPreloader} from "../../../hoc/RedirectToPreloader";
 
-
 const SunriseSunset = (props) => {
     return (<div className={classNames(styles.todayIndicatorsItem__wrapper)}>
         <h3>Заход и восход солнца</h3>
@@ -25,7 +24,6 @@ const SunriseSunset = (props) => {
 }
 
 const SunriseSunsetCompose = compose(showPreloader)(SunriseSunset);
-
 
 const SunriseSunsetWrapper = (props) => {
     return (<div className={classNames(styles.sunriseSunset, styles.todayIndicatorsItem)}>
